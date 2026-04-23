@@ -158,25 +158,26 @@ function TxRow({ tx }: { tx: Tx }) {
 
 function BottomNav() {
   const items = [
-    { icon: Home, active: true },
-    { icon: UsersRound },
-    { icon: ArrowDownUp },
-    { icon: Settings },
+    { icon: Home, to: "/" as const, active: true },
+    { icon: UsersRound, to: "/" as const },
+    { icon: Nfc, to: "/scan" as const },
+    { icon: Settings, to: "/" as const },
   ];
   return (
     <nav className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2">
       <div className="flex items-center gap-1 rounded-full bg-surface-elevated/95 px-2 py-2 ring-1 ring-border backdrop-blur-xl shadow-[var(--shadow-pill)]">
-        {items.map(({ icon: Icon }, i) => (
-          <button
+        {items.map(({ icon: Icon, to, active }, i) => (
+          <Link
             key={i}
+            to={to}
             className={`flex h-11 w-11 items-center justify-center rounded-full transition-all ${
-              i === 0
+              active
                 ? "bg-foreground text-background"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
             <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} />
-          </button>
+          </Link>
         ))}
       </div>
     </nav>

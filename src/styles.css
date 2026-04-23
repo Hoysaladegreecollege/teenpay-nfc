@@ -98,6 +98,12 @@
     oklch(0.26 0.008 270) 0%,
     oklch(0.2 0.006 270) 100%
   );
+  --gradient-send: linear-gradient(
+    95deg,
+    oklch(0.86 0.08 25) 0%,
+    oklch(0.82 0.1 340) 45%,
+    oklch(0.78 0.12 290) 100%
+  );
   --gradient-card-light: linear-gradient(
     135deg,
     oklch(0.96 0.005 90) 0%,

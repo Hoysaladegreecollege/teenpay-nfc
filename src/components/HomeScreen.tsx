@@ -1,163 +1,181 @@
-import { Bell, ArrowUpRight, ArrowDownLeft, ScanLine, Wallet, Home, History, QrCode, User } from "lucide-react";
+import {
+  ChevronRight,
+  Plus,
+  Users,
+  Receipt,
+  Gift,
+  Home,
+  UsersRound,
+  ArrowDownUp,
+  Settings,
+} from "lucide-react";
 
-type Tx = {
-  icon: string;
-  bg: string;
-  title: string;
-  meta: string;
-  amount: string;
-  positive?: boolean;
-};
+type Contact = { name: string; initial: string; badge?: number; tone: string };
 
-const transactions: Tx[] = [
-  { icon: "☕", bg: "bg-[#3a2e26]", title: "Starbucks Coffee", meta: "Today, 10:23 AM", amount: "-$4.50" },
-  { icon: "🚗", bg: "bg-[#3a2624]", title: "Uber Ride", meta: "Yesterday, 6:45 PM", amount: "-$12.20" },
-  { icon: "💰", bg: "bg-[#2a3326]", title: "Payment Received", meta: "Yesterday, 2:30 PM", amount: "+$250.00", positive: true },
-  { icon: "🛒", bg: "bg-[#2d2a36]", title: "Whole Foods", meta: "Oct 24, 5:12 PM", amount: "-$85.40" },
+const contacts: Contact[] = [
+  { name: "Mom", initial: "M", badge: 1, tone: "bg-[#3a2e2a]" },
+  { name: "Wife", initial: "W", badge: 2, tone: "bg-[#2e2a36]" },
+  { name: "Brother", initial: "B", tone: "bg-[#2a3330]" },
+  { name: "Sis", initial: "S", tone: "bg-[#332a2e]" },
+];
+
+type Tx = { title: string; date: string; amount: string };
+const txs: Tx[] = [
+  { title: "Transfer to Wife", date: "12 Mar 2024", amount: "-2,000 ৳" },
+  { title: "Electricity bill", date: "10 Mar 2024", amount: "-540 ৳" },
 ];
 
 export function HomeScreen() {
   return (
-    <div className="flex flex-col gap-5 px-5 pb-28 pt-3">
+    <div className="flex flex-col gap-5 px-5 pb-32 pt-2">
       {/* Header */}
       <header className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="relative h-11 w-11 overflow-hidden rounded-full bg-surface-elevated ring-1 ring-border">
-            <div className="flex h-full w-full items-center justify-center text-base font-semibold text-foreground">
-              AJ
-            </div>
+        <button className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-elevated text-[12px] font-semibold text-foreground ring-1 ring-border">
+            R
           </div>
-          <div className="flex flex-col leading-tight">
-            <span className="text-[11px] font-medium tracking-wide text-muted-foreground">
-              Welcome back,
-            </span>
-            <span className="text-[15px] font-semibold text-foreground">Alex Johnson</span>
-          </div>
-        </div>
-        <button className="relative flex h-10 w-10 items-center justify-center rounded-full bg-surface ring-1 ring-border transition-colors hover:bg-surface-elevated">
-          <Bell className="h-[18px] w-[18px] text-foreground" strokeWidth={1.8} />
-          <span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-destructive" />
+          <span className="text-[14px] font-medium text-foreground">Rajeev</span>
+          <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" strokeWidth={2.2} />
+        </button>
+        <button className="flex h-9 w-9 items-center justify-center rounded-full bg-surface ring-1 ring-border">
+          <Gift className="h-4 w-4 text-foreground" strokeWidth={1.8} />
         </button>
       </header>
 
-      {/* Balance Card */}
-      <section
-        className="relative overflow-hidden rounded-[28px] p-6 shadow-[var(--shadow-soft)] ring-1 ring-border"
-        style={{ background: "var(--gradient-balance)" }}
-      >
-        <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-success/5 blur-3xl" />
+      {/* Balance + Send card */}
+      <section className="relative overflow-hidden rounded-[28px] bg-surface p-5 ring-1 ring-border">
         <div className="flex items-start justify-between">
-          <span className="text-[12px] font-medium tracking-wide text-muted-foreground">
-            Total Balance
-          </span>
-          <span className="rounded-full bg-success px-2.5 py-0.5 text-[10px] font-bold tracking-widest text-success-foreground">
-            LIVE
-          </span>
-        </div>
-        <div className="mt-2 flex items-baseline">
-          <span className="text-[44px] font-bold leading-none tracking-tight text-foreground">
-            $12,450
-          </span>
-          <span className="text-[20px] font-semibold text-muted-foreground">.00</span>
-        </div>
-        <div className="mt-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-6 w-9 items-center justify-center rounded-md bg-muted-foreground/40">
-              <div className="h-3 w-5 rounded-sm bg-foreground/30" />
+          <div className="flex flex-col">
+            <span className="text-[12px] font-medium text-muted-foreground">Balance</span>
+            <div className="mt-1 flex items-baseline gap-1.5">
+              <span className="text-[32px] font-bold leading-none tracking-tight text-foreground">
+                2,500
+              </span>
+              <span className="text-[18px] font-semibold text-muted-foreground">৳</span>
             </div>
-            <span className="text-[14px] font-medium tracking-[0.3em] text-muted-foreground">
-              ···· 4582
-            </span>
           </div>
-          <div className="h-3 w-3 rounded-full ring-2 ring-muted-foreground/40" />
-        </div>
-      </section>
-
-      {/* Quick Actions */}
-      <section className="grid grid-cols-4 gap-3">
-        <QuickAction icon={<ArrowUpRight strokeWidth={1.8} className="h-5 w-5" />} label="Send" />
-        <QuickAction icon={<ArrowDownLeft strokeWidth={1.8} className="h-5 w-5" />} label="Request" />
-        <QuickAction icon={<ScanLine strokeWidth={1.8} className="h-5 w-5" />} label="Scan" />
-        <QuickAction icon={<Wallet strokeWidth={1.8} className="h-5 w-5" />} label="Top Up" />
-      </section>
-
-      {/* Recent Activity */}
-      <section className="flex flex-col gap-3">
-        <div className="flex items-center justify-between px-1">
-          <h2 className="text-[16px] font-semibold text-foreground">Recent Activity</h2>
-          <button className="text-[12px] font-medium text-muted-foreground transition-colors hover:text-foreground">
-            View All
+          <button className="flex items-center gap-1.5 rounded-full bg-surface-elevated px-3.5 py-2 text-[12px] font-medium text-foreground ring-1 ring-border transition-colors hover:bg-surface-muted">
+            <Plus className="h-3.5 w-3.5" strokeWidth={2.2} />
+            Add funds
           </button>
         </div>
-        <div className="flex flex-col gap-2">
-          {transactions.map((t) => (
-            <TransactionRow key={t.title} tx={t} />
+
+        <button
+          className="group relative mt-5 flex h-14 w-full items-center justify-center overflow-hidden rounded-full text-[15px] font-semibold text-[#1a1410] shadow-[0_10px_30px_-12px_oklch(0.78_0.12_290_/_0.7)] transition-transform active:scale-[0.99]"
+          style={{ background: "var(--gradient-send)" }}
+        >
+          <span className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/25 to-transparent" />
+          Send money
+        </button>
+      </section>
+
+      {/* Two action cards */}
+      <section className="grid grid-cols-2 gap-3">
+        <ActionCard icon={<Users className="h-4 w-4" strokeWidth={1.8} />} label="Family vault" />
+        <ActionCard icon={<Receipt className="h-4 w-4" strokeWidth={1.8} />} label="Pay bills" />
+      </section>
+
+      {/* Quick Send */}
+      <section className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-[15px] font-semibold text-foreground">Quick Send</h2>
+          <button className="flex items-center gap-0.5 text-[12px] font-medium text-muted-foreground hover:text-foreground">
+            Manage <ChevronRight className="h-3.5 w-3.5" strokeWidth={2} />
+          </button>
+        </div>
+        <div className="grid grid-cols-4 gap-2.5">
+          {contacts.map((c) => (
+            <ContactTile key={c.name} contact={c} />
           ))}
         </div>
       </section>
 
-      {/* Bottom Nav */}
+      {/* Recent transactions */}
+      <section className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-[15px] font-semibold text-foreground">Recent transactions</h2>
+          <button className="flex items-center gap-0.5 text-[12px] font-medium text-muted-foreground hover:text-foreground">
+            See all <ChevronRight className="h-3.5 w-3.5" strokeWidth={2} />
+          </button>
+        </div>
+        <div className="flex flex-col gap-2">
+          {txs.map((t) => (
+            <TxRow key={t.title} tx={t} />
+          ))}
+        </div>
+      </section>
+
       <BottomNav />
     </div>
   );
 }
 
-function QuickAction({ icon, label }: { icon: React.ReactNode; label: string }) {
+function ActionCard({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <button className="group flex flex-col items-center gap-2">
-      <div className="flex h-[58px] w-full items-center justify-center rounded-2xl bg-surface ring-1 ring-border transition-all group-hover:bg-surface-elevated group-active:scale-95">
-        <span className="text-foreground">{icon}</span>
-      </div>
-      <span className="text-[11px] font-medium text-muted-foreground">{label}</span>
+    <button className="flex h-14 items-center gap-2.5 rounded-2xl bg-surface px-4 ring-1 ring-border transition-colors hover:bg-surface-elevated">
+      <span className="flex h-7 w-7 items-center justify-center rounded-full bg-surface-elevated text-foreground ring-1 ring-border">
+        {icon}
+      </span>
+      <span className="text-[13px] font-medium text-foreground">{label}</span>
     </button>
   );
 }
 
-function TransactionRow({ tx }: { tx: Tx }) {
+function ContactTile({ contact }: { contact: Contact }) {
   return (
-    <div className="flex items-center justify-between rounded-2xl bg-surface px-3.5 py-3 ring-1 ring-border transition-colors hover:bg-surface-elevated">
+    <button className="group flex flex-col items-center gap-1.5">
+      <div className="relative h-[68px] w-full overflow-hidden rounded-2xl ring-1 ring-border">
+        <div className={`flex h-full w-full items-center justify-center ${contact.tone}`}>
+          <span className="text-[20px] font-semibold text-foreground/80">{contact.initial}</span>
+        </div>
+        {contact.badge !== undefined && (
+          <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-[9px] font-bold text-background">
+            {contact.badge}
+          </span>
+        )}
+      </div>
+      <span className="text-[11px] font-medium text-muted-foreground">{contact.name}</span>
+    </button>
+  );
+}
+
+function TxRow({ tx }: { tx: Tx }) {
+  return (
+    <div className="flex items-center justify-between rounded-2xl bg-surface px-4 py-3 ring-1 ring-border">
       <div className="flex items-center gap-3">
-        <div className={`flex h-10 w-10 items-center justify-center rounded-full text-base ${tx.bg}`}>
-          {tx.icon}
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-elevated ring-1 ring-border">
+          <ArrowDownUp className="h-4 w-4 text-muted-foreground" strokeWidth={1.8} />
         </div>
         <div className="flex flex-col leading-tight">
-          <span className="text-[14px] font-semibold text-foreground">{tx.title}</span>
-          <span className="text-[11px] text-muted-foreground">{tx.meta}</span>
+          <span className="text-[13px] font-semibold text-foreground">{tx.title}</span>
+          <span className="text-[11px] text-muted-foreground">{tx.date}</span>
         </div>
       </div>
-      <span
-        className={`text-[14px] font-semibold ${
-          tx.positive ? "text-success" : "text-foreground"
-        }`}
-      >
-        {tx.amount}
-      </span>
+      <span className="text-[13px] font-semibold text-foreground">{tx.amount}</span>
     </div>
   );
 }
 
 function BottomNav() {
   const items = [
-    { icon: Home, label: "Home", active: true },
-    { icon: History, label: "Activity" },
-    { icon: QrCode, label: "Scan" },
-    { icon: Wallet, label: "Wallet" },
-    { icon: User, label: "Profile" },
+    { icon: Home, active: true },
+    { icon: UsersRound },
+    { icon: ArrowDownUp },
+    { icon: Settings },
   ];
   return (
-    <nav className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2">
-      <div className="flex items-center gap-1 rounded-full bg-surface-elevated/95 px-2 py-2 ring-1 ring-border backdrop-blur-xl shadow-[var(--shadow-pill)]">
-        {items.map(({ icon: Icon, label, active }) => (
+    <nav className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2">
+      <div className="flex items-center gap-1 rounded-full bg-[oklch(0.18_0.005_270)/0.92] px-2 py-2 ring-1 ring-border backdrop-blur-xl shadow-[var(--shadow-pill)]">
+        {items.map(({ icon: Icon }, i) => (
           <button
-            key={label}
-            className={`flex items-center gap-2 rounded-full px-3.5 py-2.5 transition-all ${
-              active
-                ? "bg-foreground text-background"
+            key={i}
+            className={`flex h-11 w-11 items-center justify-center rounded-full transition-all ${
+              i === 0
+                ? "bg-foreground text-background shadow-[0_0_0_4px_oklch(0.18_0.005_270)]"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
             <Icon className="h-[18px] w-[18px]" strokeWidth={1.8} />
-            {active && <span className="text-[12px] font-semibold">{label}</span>}
           </button>
         ))}
       </div>

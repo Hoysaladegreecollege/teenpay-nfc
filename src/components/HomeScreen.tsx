@@ -165,7 +165,7 @@ function BottomNav() {
   ];
   return (
     <nav className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2">
-      <div className="flex items-center gap-1 rounded-full bg-[oklch(0.18_0.005_270)/0.92] px-2 py-2 ring-1 ring-border backdrop-blur-xl shadow-[var(--shadow-pill)]">
+      <div className="flex items-center gap-1 rounded-full bg-surface-elevated/95 px-2 py-2 ring-1 ring-border backdrop-blur-xl shadow-[var(--shadow-pill)]">
         {items.map(({ icon: Icon }, i) => (
           <button
             key={i}

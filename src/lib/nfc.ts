@@ -37,7 +37,7 @@ let cachedModule: NfcModule | null | undefined;
 async function loadNfc(): Promise<NfcModule | null> {
   if (cachedModule !== undefined) return cachedModule;
   try {
-    const pkg = ["@capacitor-community", "nfc"].join("/");
+    const pkg = ["@capgo", "capacitor-nfc"].join("/");
     const mod = (await import(/* @vite-ignore */ pkg)) as NfcModule;
     cachedModule = mod;
   } catch {

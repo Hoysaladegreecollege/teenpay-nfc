@@ -171,7 +171,7 @@ function BottomNav() {
             key={i}
             className={`flex h-11 w-11 items-center justify-center rounded-full transition-all ${
               i === 0
-                ? "bg-foreground text-background shadow-[0_0_0_4px_oklch(0.18_0.005_270)]"
+                ? "bg-foreground text-background"
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >

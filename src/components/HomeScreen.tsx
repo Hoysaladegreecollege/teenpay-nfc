@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import {
   ChevronRight,
   Plus,
@@ -8,6 +9,7 @@ import {
   UsersRound,
   ArrowDownUp,
   Settings,
+  Nfc,
 } from "lucide-react";
 
 type Contact = { name: string; initial: string; badge?: number; tone: string };
